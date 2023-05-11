@@ -1,0 +1,147 @@
+body.lock {
+  overflow: hidden;
+}
+
+* {
+  padding: 0;
+  margin: 0; // border: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+ul {
+  list-style: none;
+}
+
+.wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  &::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: lightcyan;
+
+    position: absolute;
+    top: 0;
+    z-index: 1;
+  }
+
+  nav ul {
+    display: flex;
+    gap: 50px;
+    justify-content: flex-end;
+
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+
+  #burger {
+    display: none;
+  }
+}
+
+main {
+  padding-top: 55px;
+}
+// ------------------------ bPoint -----------------
+@media (max-width: 767px) {
+  header {
+    nav {
+      position: fixed;
+      left: 0;
+      top: -100%;
+
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding-left: 15px;
+      padding: 60px 10px 20px;
+
+      overflow: auto;
+      transition: top 0.3s;
+
+      ul {
+        display: block;
+
+        li:not(:last-child) {
+          margin-bottom: 15px;
+        }
+      }
+
+      &.active {
+        top: 0;
+      }
+    }
+
+    #burger {
+      $burger-width: 35px;
+      $burger-height: 25px;
+      $line-width: 3px;
+      $deltaY: ($burger-height - $line-width) / 2;
+      $line-color: #000;
+      $t-time: 0.5s;
+
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: $burger-width;
+      height: $burger-height;
+
+      &::before,
+      &::after,
+      span {
+        position: absolute;
+        width: 100%;
+        height: $line-width;
+        background: $line-color;
+        transition: transform $t-time;
+      }
+
+      &::before,
+      &::after {
+        content: "";
+      }
+
+      &::after {
+        bottom: 0;
+      }
+
+      span {
+        top: $deltaY;
+        transform: scale(1);
+      }
+
+      &.active {
+        span {
+          transform: scale(0);
+        }
+
+        &::before {
+          transform: rotate(45deg);
+          top: $deltaY;
+        }
+
+        &::after {
+          transform: rotate(-45deg);
+          bottom: $deltaY;
+        }
+      }
+    }
+  }
+}
